@@ -9,19 +9,22 @@ class V1::SharksController < ApplicationController
   end
 
   def create
-    @shark = Shark.create(common_name: params[:common_name], latin_name: params[:latin_name], habitat_range: params[:habitat_range], attacks_on_humans: params[:attacks_on_humans], suitability_as_pet: false)
-    
-    render :show
+    @shark = Shark.new(common_name: params[:common_name], latin_name: params[:latin_name], habitat_range: params[:habitat_range], attacks_on_humans: params[:attacks_on_humans], suitability_as_pet: false)
+    if @shark.save
+    else
+      render json: {errors: @shark.errors.full_messages}, status: 422
+    end
   end
 
   def update
     @shark = Shark.find_by(id: params[:id])
-    @shark.update(common_name: params[:common_name], latin_name: params[:latin_name], habitat_range: params[:habitat_range], attacks_on_humans: params[:attacks_on_humans], suitability_as_pet: false)
-    render :show
+    if @shark.update(common_name: params[:common_name], latin_name: params[:latin_name], habitat_range: params[:habitat_range], attacks_on_humans: params[:attacks_on_humans], suitability_as_pet: false)
+    else
+      render json: {errors: @shark.errors.full_messages}, status: 422
+    end
   end
 
   def destroy
     Shark.find_by(id: params[:id]).destroy
-    render nil
   end
 end

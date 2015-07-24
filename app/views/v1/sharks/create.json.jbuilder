@@ -1,0 +1,1 @@
+json.partial! 'v1/sharks/sharks', shark: @shark, as: :shark

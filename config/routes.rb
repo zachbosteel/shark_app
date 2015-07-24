@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "/" => 'sharks#index'
+
   namespace :v1 do
     root to: 'sharks#index'
     get "/" => 'sharks#index'

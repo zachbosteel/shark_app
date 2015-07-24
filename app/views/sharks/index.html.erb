@@ -1,0 +1,62 @@
+<div ng-app="app">
+  <div ng-controller="sharks_ctrl" ng-init="setup()">
+    <div>
+      <h1> Add New Shark </h1>
+      <ul>
+      <li ng-repeat="error in errors" ng-if="errors">{{error}}</li>
+      </ul>
+      <table>
+      <tr>
+      <td>Common Name:</td><td><input ng-model="newShark.common_name"></td>
+      </tr>
+      <tr>
+      <td>Latin Name:</td><td> <input ng-model="newShark.latin_name"></td>
+      </tr>
+      <tr>
+      <td>Habitat Range:</td><td> <input ng-model="newShark.habitat_range"></td>
+      </tr>
+      <tr>
+      <td>Attacks on Humans:</td><td> <input ng-model="newShark.attacks_on_humans"></td>
+      </tr>
+      </table>
+      <button ng-click="addShark(newShark)">Add Shark</button>
+    </div>
+    <div>
+      <h3>Search Sharks:</h3> <input ng-model="sharkName" list="common_names">
+
+      <datalist id="common_names">
+        <option ng-repeat="shark in sharks">{{shark.common_name}}</option>
+      </datalist>
+
+    </div>
+    <table>
+    <tr>
+      <th ng-click="sortOrder('common_name')">Common Name</th>
+      <th ng-click="sortOrder('latin_name')">Latin Name</th>
+      <th ng-click="sortOrder('habitat_range')">Habitat Range</th>
+      <th ng-click="sortOrder('attacks_on_humans')">Attacks on Humans</th>
+      <th ng-click="sortOrder('suitability_as_pet')">Suitability as Pet</th>
+    </tr>
+    <tr ng-repeat="shark in sharks | filter:{common_name: sharkName} | orderBy:orderAttribute:descending track by $index"> 
+        <td ng-if="!shark.editStatus">{{shark.common_name}}</td>
+        <td ng-if="!shark.editStatus">{{shark.latin_name}}</td>
+        <td ng-if="!shark.editStatus">{{shark.habitat_range}}</td>
+        <td ng-if="!shark.editStatus">{{shark.attacks_on_humans}}</td>
+        <td ng-if="!shark.editStatus">{{shark.suitability_as_pet}}</td>
+        <td ng-if="!shark.editStatus"><button ng-click="toggleEdit(shark)">Edit Shark</button></td>
+        <td ng-if="!shark.editStatus"><button ng-click="deleteShark(shark)">Delete Shark</button></td>
+              <!-- <ul>
+                <li ng-repeat="error in sharkErrors" ng-if="errors">{{error}}</li>
+              </ul> -->
+        <td ng-if="shark.editStatus"><input ng-model="shark.common_name"</td>
+        <td ng-if="shark.editStatus"><input ng-model="shark.latin_name"</td>
+        <td ng-if="shark.editStatus"><input ng-model="shark.habitat_range"</td>
+        <td ng-if="shark.editStatus"><input ng-model="shark.attacks_on_humans"</td>
+        <td ng-if="shark.editStatus">Suitability as Pet: {{shark.suitability_as_pet}}</td>
+        <td ng-if="shark.editStatus"><button ng-click="editShark(shark)">Submit Shark Edits</button></td>
+        <td ng-if="shark.editStatus"><button ng-click="deleteShark(shark)">Delete Shark</button></td>
+    </tr>
+  </table>
+  </div>
+  </div>
+</div>
